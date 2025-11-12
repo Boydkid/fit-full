@@ -14,7 +14,8 @@
 "scripts": {
   "dev": "ts-node src/server.ts",
   "start": "node dist/server.js",
-  "build": "node -e \"import('prisma/build').then(() => import('typescript')).then(ts => ts.sys.writeFile)\" || npx prisma generate && tsc",
+  "build": "tsc",
+  "postinstall": "npx prisma generate",
   "test": "jest",
   "test:watch": "jest --watch",
   "test:coverage": "jest --coverage",
