@@ -10,6 +10,7 @@ RUN npm install --ignore-scripts
 
 # ✅ Copy Prisma schema before running generate
 COPY prisma ./prisma
+WORKDIR /app
 RUN npx prisma generate
 
 # Copy rest of the source code
