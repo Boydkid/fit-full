@@ -5,14 +5,14 @@ WORKDIR /app
 # Copy package files first
 COPY package*.json ./
 
-# Install all dependencies
-RUN npm install
+# Install all dependencies (skip postinstall)
+RUN npm install --ignore-scripts
 
-# ✅ Copy Prisma schema BEFORE running generate
+# ✅ Copy Prisma schema before running generate
 COPY prisma ./prisma
 RUN npx prisma generate
 
-# Copy the rest of the project
+# Copy rest of the source code
 COPY . .
 
 # Build TypeScript -> dist/
