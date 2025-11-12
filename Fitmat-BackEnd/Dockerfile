@@ -16,6 +16,9 @@ RUN npx prisma generate
 # Copy rest of the source code
 COPY . .
 
+# ✅ Fix permissions for TypeScript compiler
+RUN chmod +x ./node_modules/.bin/tsc
+
 # Build TypeScript -> dist/
 RUN npm run build
 
