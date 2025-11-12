@@ -8,10 +8,11 @@ COPY package*.json ./
 # Install all dependencies
 RUN npm install
 
-# Generate Prisma client
+# ✅ Copy Prisma schema BEFORE running generate
+COPY prisma ./prisma
 RUN npx prisma generate
 
-# Copy source code
+# Copy the rest of the project
 COPY . .
 
 # Build TypeScript -> dist/
@@ -27,7 +28,7 @@ COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
 
-# Copy env file if exists
+# Copy environment file if exists
 COPY .env .env
 
 # Expose port (4000)
