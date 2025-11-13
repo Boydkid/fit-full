@@ -2,6 +2,7 @@
 import { Role } from "@prisma/client";
 import prisma from "../utils/prisma";
 
+
 export const listTrainers = async (_req: Request, res: Response) => {
   try {
     const trainers = await prisma.user.findMany({
@@ -32,7 +33,7 @@ export const listTrainers = async (_req: Request, res: Response) => {
       const averageRating =
         ratingCount > 0
           ? ratedReviews.reduce((sum, review) => sum + (review.rating ?? 0), 0) /
-            ratingCount
+          ratingCount
           : null;
 
       return {
@@ -93,7 +94,7 @@ export const getTrainerById = async (req: Request, res: Response) => {
     const averageRating =
       ratingCount > 0
         ? ratedReviews.reduce((sum, review) => sum + (review.rating ?? 0), 0) /
-          ratingCount
+        ratingCount
         : null;
 
     return res.json({
@@ -110,5 +111,60 @@ export const getTrainerById = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Failed to fetch trainer", error);
     return res.status(500).json({ message: "Failed to fetch trainer." });
+  }
+};
+
+
+export const createBooking = async (req: Request, res: Response) => {
+  try {
+    const { trainerId, date, time, duration, note } = req.body;
+    const userId = req.authUser?.id;
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const booking = await prisma.trainerBooking.create({
+      data: {
+        userId,
+        trainerId,
+        date: new Date(date),
+        time,
+        duration,
+        note,
+      },
+    });
+
+    return res.status(201).json({
+      message: "Booking created successfully",
+      booking,
+    });
+  } catch (error) {
+    console.error("Failed to create booking:", error);
+    return res.status(500).json({ message: "Failed to create booking" });
+  }
+};
+
+
+
+
+export const listBookings = async (_req: Request, res: Response) => {
+  try {
+    const bookings = await prisma.trainerBooking.findMany({
+      orderBy: { createdAt: "desc" },
+      include: {
+        user: { select: { id: true, email: true, username: true } },
+        trainer: { select: { id: true, email: true, username: true } },
+      },
+    });
+
+    return res.json(bookings);
+  } catch (error) {
+    console.error("Error fetching bookings:", error);
+    return res.status(500).json({ message: "Failed to fetch bookings" });
   }
 };
