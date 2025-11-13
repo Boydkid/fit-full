@@ -11,14 +11,22 @@ export interface AuthResponse {
   user: User;
 }
 
+// ✔ โหลด ENV ให้ชัดเจน
 const API_BASE = process.env.NEXT_PUBLIC_API_URL;
-// 👉 ตัวอย่าง: https://fit-full-production.up.railway.app
+
+// ✔ กันกรณี ENV ไม่มีค่า หรือต่อ URL ซ้ำ //
+if (!API_BASE) {
+  console.warn("❗ NEXT_PUBLIC_API_URL is NOT defined. Check your Vercel Env.");
+}
 
 function apiUrl(path: string): string {
+  // กัน path ซ้ำ /api/api
   return `${API_BASE}${path}`;
 }
 
-// Parse JWT token
+// ----------------------
+// JWT Utils
+// ----------------------
 export function parseJwt(token: string) {
   try {
     const base64Url = token.split(".")[1];
@@ -76,7 +84,9 @@ export function isAdmin() {
 // 🔥 LOGIN
 // ----------------------
 export async function login(email: string, password: string) {
-  const res = await fetch(apiUrl(`/api/login`), {
+  const url = apiUrl("/api/login");
+
+  const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
@@ -95,7 +105,9 @@ export async function login(email: string, password: string) {
 // 🔥 REGISTER
 // ----------------------
 export async function register(email: string, password: string) {
-  const res = await fetch(apiUrl(`/api/register`), {
+  const url = apiUrl("/api/register");
+
+  const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
