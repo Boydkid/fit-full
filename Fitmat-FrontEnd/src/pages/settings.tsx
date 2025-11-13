@@ -342,7 +342,7 @@ export default function SettingsPage() {
                   className="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-red-50 file:text-red-600 hover:file:bg-red-100"
                 />
                 <p className="text-xs text-gray-500">
-                  Upload a JPG, PNG, GIF, or WEBP image up to 2MB.
+                  Upload a JPG, PNG, GIF, or WEBP image up to 1MB.
                 </p>
                 {profileImage && (
                   <div className="flex items-center justify-between rounded-lg bg-gray-100 px-3 py-2 text-sm text-gray-600">
