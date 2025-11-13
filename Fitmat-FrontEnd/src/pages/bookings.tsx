@@ -87,14 +87,21 @@ const transformEnrollment = (enrollment: EnrolledClassResponse): EnrollmentDispl
 export default function BookingsPage() {
   const router = useRouter();
   const [userId, setUserId] = useState<number | null>(null);
+
   const [bookings, setBookings] = useState<EnrollmentDisplay[]>([]);
   const [rawEnrollments, setRawEnrollments] = useState<EnrolledClassResponse[]>([]);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<FilterOption>("all");
 
+  // ⭐ Trainer Booking State
+  const [trainerBookings, setTrainerBookings] = useState<any[]>([]);
+
+  // 🌟 Load JWT user ID
   useEffect(() => {
-    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const token =
+      typeof window !== "undefined" ? localStorage.getItem("token") : null;
     if (!token) {
       setError("Please sign in to see your bookings.");
       return;
@@ -108,21 +115,38 @@ export default function BookingsPage() {
     setUserId(payload.id);
   }, []);
 
+  // 🌟 Load All Bookings
   useEffect(() => {
-    const fetchEnrollments = async () => {
-      if (!userId) {
-        return;
-      }
+    if (!userId) return;
+
+    const fetchAll = async () => {
       setLoading(true);
       setError(null);
+
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${userId}/classes`);
-        if (!res.ok) {
-          throw new Error("Unable to load bookings.");
-        }
+        // ⭐ Load class enrollments
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/users/${userId}/classes`
+        );
+        if (!res.ok) throw new Error("Unable to load class bookings.");
         const data: UserEnrollmentResponse = await res.json();
         setRawEnrollments(data.enrollments ?? []);
         setBookings((data.enrollments ?? []).map(transformEnrollment));
+
+        // ⭐ Load trainer bookings
+        const token = localStorage.getItem("token");
+        const trainerRes = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/trainers/my-bookings`,
+          {
+            headers: {
+              Authorization: token ? `Bearer ${token}` : "",
+            },
+          }
+        );
+        if (trainerRes.ok) {
+          const trainerData = await trainerRes.json();
+          setTrainerBookings(trainerData);
+        }
       } catch (err: any) {
         setError(err.message || "Something went wrong while loading data.");
       } finally {
@@ -130,13 +154,11 @@ export default function BookingsPage() {
       }
     };
 
-    fetchEnrollments();
+    fetchAll();
   }, [userId]);
 
   const filteredBookings = useMemo(() => {
-    if (filter === "all") {
-      return bookings;
-    }
+    if (filter === "all") return bookings;
     return bookings.filter((booking) => booking.status === filter);
   }, [bookings, filter]);
 
@@ -147,33 +169,27 @@ export default function BookingsPage() {
         acc[booking.status] = (acc[booking.status] || 0) + 1;
         return acc;
       },
-      {
-        all: 0,
-        UPCOMING: 0,
-        ONGOING: 0,
-        ENDED: 0,
-      } as Record<"all" | Exclude<FilterOption, "all">, number>
+      { all: 0, UPCOMING: 0, ONGOING: 0, ENDED: 0 }
     );
   }, [bookings]);
 
   const getFilterButtonClass = (filterType: FilterOption) => {
-    const baseClass = "px-4 py-2 rounded-lg font-semibold transition-all duration-200";
+    const baseClass =
+      "px-4 py-2 rounded-lg font-semibold transition-all duration-200";
     const isActive = filter === filterType;
 
-    if (isActive) {
-      return `${baseClass} bg-red-500 text-white shadow-lg`;
-    }
-
-    return `${baseClass} bg-gray-100 text-gray-700 hover:bg-gray-200`;
+    return isActive
+      ? `${baseClass} bg-red-500 text-white shadow-lg`
+      : `${baseClass} bg-gray-100 text-gray-700 hover:bg-gray-200`;
   };
 
   const handleCancel = async (enrollmentId: number) => {
     if (!userId) return;
 
-    const enrollment = rawEnrollments.find((item) => item.enrollmentId === enrollmentId);
-    if (!enrollment) {
-      return;
-    }
+    const enrollment = rawEnrollments.find(
+      (item) => item.enrollmentId === enrollmentId
+    );
+    if (!enrollment) return;
 
     const result = await Swal.fire({
       title: "Cancel this booking?",
@@ -186,16 +202,12 @@ export default function BookingsPage() {
       cancelButtonColor: "#6b7280",
     });
 
-    if (!result.isConfirmed) {
-      return;
-    }
+    if (!result.isConfirmed) return;
 
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/users/${userId}/classes/${enrollment.class.id}`,
-        {
-          method: "DELETE",
-        }
+        { method: "DELETE" }
       );
 
       if (!res.ok) {
@@ -203,49 +215,91 @@ export default function BookingsPage() {
         throw new Error(data?.message || "Unable to cancel booking.");
       }
 
-      setRawEnrollments((prev) => prev.filter((item) => item.enrollmentId !== enrollmentId));
-      setBookings((prev) => prev.filter((item) => item.enrollmentId !== enrollmentId));
+      setRawEnrollments((prev) =>
+        prev.filter((item) => item.enrollmentId !== enrollmentId)
+      );
+      setBookings((prev) =>
+        prev.filter((item) => item.enrollmentId !== enrollmentId)
+      );
 
       await Swal.fire({
         icon: "success",
         title: "Booking cancelled",
-        text: "Booking has been cancelled",
         confirmButtonColor: "#ef4444",
       });
     } catch (error: any) {
       await Swal.fire({
         icon: "error",
         title: "Cancel failed",
-        text: error?.message || "Something went wrong. Please try again.",
+        text: error?.message || "Something went wrong.",
         confirmButtonColor: "#ef4444",
       });
     }
   };
 
-  const emptyTitle =
-    filter === "all"
-      ? "No bookings found"
-      : `No classes found for "${statusLabels[filter as Exclude<FilterOption, "all">]}"`;
-  const emptyDescription =
-    filter === "all"
-      ? "Start exploring our classes and enrol today."
-      : "Try browsing other available classes.";
-
   const handleViewDetails = (enrollmentId: number) => {
-    const enrollment = rawEnrollments.find((item) => item.enrollmentId === enrollmentId);
+    const enrollment = rawEnrollments.find(
+      (item) => item.enrollmentId === enrollmentId
+    );
     if (!enrollment) return;
     router.push(`/fitmateclass/${enrollment.class.id}`);
   };
+
+  const emptyTitle =
+    filter === "all"
+      ? "No bookings found"
+      : `No classes for "${statusLabels[filter as Exclude<FilterOption, "all">]}"`;
+
+  const emptyDescription =
+    filter === "all"
+      ? "Start exploring our classes and enrol today."
+      : "Try browsing other classes.";
 
   return (
     <Layout>
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Your Class Bookings</h1>
-            <p className="text-gray-600 text-lg">Keep track of every class you have enrolled in, spot what is coming up, and review what has been completed.</p>
+          {/* ⭐ Trainer Bookings */}
+          <div className="bg-white rounded-2xl shadow-lg p-6 mb-14">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              Your Trainer Bookings
+            </h2>
+
+            {trainerBookings.length === 0 ? (
+              <p className="text-gray-600">You have no trainer bookings.</p>
+            ) : (
+              <div className="space-y-4">
+                {trainerBookings.map((b) => (
+                  <div
+                    key={b.id}
+                    className="border p-4 rounded-xl bg-gray-50 shadow-sm"
+                  >
+                    <p className="text-lg font-semibold text-gray-800">
+                      Trainer: {b.trainer.username || b.trainer.email}
+                    </p>
+                    <p>Date: {b.date}</p>
+                    <p>Time: {b.time}</p>
+                    <p>Duration: {b.duration} mins</p>
+                    <p className="text-gray-600 mt-2">
+                      {b.note || "No notes"}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
+          {/* ⭐ Class Bookings Section */}
+          <div className="text-center mb-12">
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+              Your Class Bookings
+            </h1>
+            <p className="text-gray-600 text-lg">
+              Keep track of all classes you have enrolled in.
+            </p>
+          </div>
+
+          {/* FILTER */}
           <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
             <div className="flex flex-wrap gap-3 justify-center">
               <button
@@ -254,13 +308,15 @@ export default function BookingsPage() {
               >
                 All ({statusCounts.all})
               </button>
+
               {Object.entries(statusLabels).map(([key, label]) => (
                 <button
                   key={key}
                   onClick={() => setFilter(key as FilterOption)}
                   className={getFilterButtonClass(key as FilterOption)}
                 >
-                  {label} ({statusCounts[key as Exclude<FilterOption, "all">]})
+                  {label} (
+                  {statusCounts[key as Exclude<FilterOption, "all">]})
                 </button>
               ))}
             </div>
@@ -269,7 +325,7 @@ export default function BookingsPage() {
           {loading ? (
             <div className="text-center py-12">
               <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
-              <p className="text-gray-500 mt-4">Loading data...</p>
+              <p className="text-gray-500 mt-4">Loading...</p>
             </div>
           ) : error ? (
             <div className="text-center py-12">
@@ -280,21 +336,9 @@ export default function BookingsPage() {
           ) : filteredBookings.length === 0 ? (
             <div className="text-center py-12">
               <div className="bg-gray-50 border border-gray-200 text-gray-700 px-6 py-8 rounded-lg max-w-md mx-auto">
-                <svg
-                  className="w-16 h-16 text-gray-400 mx-auto mb-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                  />
-                </svg>
                 <h3 className="text-lg font-semibold mb-2">{emptyTitle}</h3>
                 <p className="text-gray-500 mb-4">{emptyDescription}</p>
+
                 {filter === "all" && (
                   <Button href="/fitmateclass" variant="primary">
                     Browse classes
@@ -320,10 +364,10 @@ export default function BookingsPage() {
             <div className="mt-12 text-center">
               <div className="bg-white rounded-2xl shadow-lg p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                  Ready to book another class?
+                  Ready for more?
                 </h3>
                 <Button href="/fitmateclass" variant="primary" size="lg">
-                  Find more classes
+                  Explore More Classes
                 </Button>
               </div>
             </div>
@@ -333,6 +377,3 @@ export default function BookingsPage() {
     </Layout>
   );
 }
-
-
-
