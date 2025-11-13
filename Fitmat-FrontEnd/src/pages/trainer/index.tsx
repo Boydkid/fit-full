@@ -33,7 +33,11 @@ export default function Trainer() {
       setLoading(true);
       setError(null);
       try {
-        const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "${process.env.NEXT_PUBLIC_API_URL}").replace(/\/$/, "");
+        const rawBase =
+  process.env.NEXT_PUBLIC_API_URL || 
+  "https://fit-full-production.up.railway.app";
+
+const apiBase = rawBase.replace(/\/$/, "");
         const res = await fetch(`${apiBase}/api/trainers`);
         if (!res.ok) {
           throw new Error("Failed to fetch trainers");

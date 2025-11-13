@@ -26,7 +26,11 @@ export default function SuccessPage() {
     session_id?: string | string[];
   };
   const sessionId = Array.isArray(session_id) ? session_id[0] : session_id;
-  const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "${process.env.NEXT_PUBLIC_API_URL}").replace(/\/$/, "");
+  const rawBase =
+  process.env.NEXT_PUBLIC_API_URL || 
+  "https://fit-full-production.up.railway.app";
+
+const apiBase = rawBase.replace(/\/$/, "");
 
   const [state, setState] = useState<
     | { kind: "idle" }

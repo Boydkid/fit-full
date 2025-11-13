@@ -48,7 +48,11 @@ export default function Review() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "${process.env.NEXT_PUBLIC_API_URL}").replace(/\/$/, "");
+        const rawBase =
+  process.env.NEXT_PUBLIC_API_URL || 
+  "https://fit-full-production.up.railway.app";
+
+const apiBase = rawBase.replace(/\/$/, "");
         // Fetch both summary and reviews
         const [summaryRes, reviewsRes] = await Promise.all([
           fetch(`${apiBase}/api/reviews/summary`),

@@ -37,7 +37,11 @@ export default function ClassListPage() {
   const [selectedCategory, setSelectedCategory] = useState<number | "all">("all");
 
   const router = useRouter();
-  const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "${process.env.NEXT_PUBLIC_API_URL}").replace(/\/$/, "");
+  const rawBase =
+  process.env.NEXT_PUBLIC_API_URL || 
+  "https://fit-full-production.up.railway.app";
+
+const apiBase = rawBase.replace(/\/$/, "");
 
   useEffect(() => {
     const fetchClasses = async () => {

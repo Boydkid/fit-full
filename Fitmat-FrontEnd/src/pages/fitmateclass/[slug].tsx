@@ -44,7 +44,11 @@ export default function ClassDetailPage() {
   const { slug } = router.query; // ✅ ได้ค่าจาก URL /fitmateclass/[slug]
   const [user, setUser] = useState<TokenPayload | null>(null);
 
-  const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "${process.env.NEXT_PUBLIC_API_URL}").replace(/\/$/, "");
+  const rawBase =
+  process.env.NEXT_PUBLIC_API_URL || 
+  "https://fit-full-production.up.railway.app";
+
+const apiBase = rawBase.replace(/\/$/, "");
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");

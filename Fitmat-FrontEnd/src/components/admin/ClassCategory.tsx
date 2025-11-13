@@ -17,7 +17,7 @@ type ClassCategoryProps = {
 const RAW_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ??
   process.env.NEXT_PUBLIC_BACKEND_API_BASE_URL ??
-  "${process.env.NEXT_PUBLIC_API_URL}/api";
+  process.env.NEXT_PUBLIC_API_URL + "/api";
 
 const API_BASE_URL = RAW_BASE_URL.endsWith("/")
   ? RAW_BASE_URL.slice(0, -1)

@@ -92,7 +92,11 @@ export default function TrainerDetailPage() {
   const { slug } = router.query;
   const trainerIdStr = Array.isArray(slug) ? slug[0] : (slug as string | undefined);
 
-  const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "${process.env.NEXT_PUBLIC_API_URL}").replace(/\/$/, "");
+  const rawBase =
+  process.env.NEXT_PUBLIC_API_URL || 
+  "https://fit-full-production.up.railway.app";
+
+const apiBase = rawBase.replace(/\/$/, "");
 
   const [trainer, setTrainer] = useState<TrainerDetail | null>(null);
   const [loading, setLoading] = useState(false);

@@ -27,7 +27,11 @@ export default function ResetPasswordPage() {
 
     setLoading(true);
     try {
-      const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "${process.env.NEXT_PUBLIC_API_URL}").replace(/\/$/, "");
+      const rawBase =
+  process.env.NEXT_PUBLIC_API_URL || 
+  "https://fit-full-production.up.railway.app";
+
+const apiBase = rawBase.replace(/\/$/, "");
       const res = await fetch(`${apiBase}/api/verify-reset-token`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -67,7 +71,11 @@ export default function ResetPasswordPage() {
 
     setLoading(true);
     try {
-      const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "${process.env.NEXT_PUBLIC_API_URL}").replace(/\/$/, "");
+      const rawBase =
+  process.env.NEXT_PUBLIC_API_URL || 
+  "https://fit-full-production.up.railway.app";
+
+const apiBase = rawBase.replace(/\/$/, "");
       const res = await fetch(`${apiBase}/api/reset-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

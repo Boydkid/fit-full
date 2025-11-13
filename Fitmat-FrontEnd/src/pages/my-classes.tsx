@@ -42,7 +42,11 @@ export default function MyClassesPage() {
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | "UPCOMING" | "ONGOING" | "ENDED">("all");
 
-  const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "${process.env.NEXT_PUBLIC_API_URL}").replace(/\/$/, "");
+  const rawBase =
+  process.env.NEXT_PUBLIC_API_URL || 
+  "https://fit-full-production.up.railway.app";
+
+const apiBase = rawBase.replace(/\/$/, "");
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");

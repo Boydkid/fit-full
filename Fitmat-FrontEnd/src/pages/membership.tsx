@@ -60,7 +60,13 @@ export default function MembershipPage() {
   const [token, setToken] = useState<string | null>(null);
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
 
-  const apiBase = useMemo(() => (process.env.NEXT_PUBLIC_API_BASE || "${process.env.NEXT_PUBLIC_API_URL}").replace(/\/$/, ""), []);
+  const apiBase = useMemo(() => {
+  const rawBase =
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://fit-full-production.up.railway.app";
+
+  return rawBase.replace(/\/$/, "");
+}, []);
 
   useEffect(() => {
     const storedToken = typeof window !== "undefined" ? localStorage.getItem("token") : null;
