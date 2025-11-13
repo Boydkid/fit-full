@@ -2,8 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
-import { Layout } from "../../components/Layout";
-import { Card, Button } from "../../components/common";
+import { Layout } from "../components/Layout";
+import { Card, Button } from "../components/common";
 import { parseJwt } from "../utils/auth";
 
 type Class = {

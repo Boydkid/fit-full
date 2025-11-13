@@ -1,13 +1,13 @@
 ﻿import React from "react";
-import Layout from "../../components/Layout/Layout";
+import Layout from "../components/Layout/Layout";
 import {
   HeroSection,
   ExpertSection,
   ReviewsSection,
   PricingSection,
   CTASection,
-} from "../../components/home";
-import { FadeIn } from "../../components/common";
+} from "../components/home";
+import { FadeIn } from "../components/common";
 
 export default function Home() {
 

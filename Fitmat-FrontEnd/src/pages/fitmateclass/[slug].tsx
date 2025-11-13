@@ -2,8 +2,8 @@
 import { useEffect, useMemo, useState } from "react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
-import { Layout } from "../../../components/Layout";
-import { Button, Card } from "../../../components/common";
+import { Layout } from "../../components/Layout";
+import { Button, Card } from "../../components/common";
 import { parseJwt } from "../../utils/auth";
 
 type User = {

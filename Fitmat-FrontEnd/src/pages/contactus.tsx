@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Header from "../../components/Layout/Header";
+import Header from "../components/Layout/Header";
 
 export default function Contact() {
   const [open, setOpen] = useState(false);

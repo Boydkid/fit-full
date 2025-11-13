@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Input from '../../../components/common/Input';
+import Input from '../../components/common/Input';
 
 describe('Input Component', () => {
   it('renders input with value', () => {

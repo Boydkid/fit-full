@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import { Layout } from "../../components/Layout";
-import { BookingCard, EnrollmentDisplay } from "../../components/booking";
-import { Button } from "../../components/common";
+import { Layout } from "../components/Layout";
+import { BookingCard, EnrollmentDisplay } from "../components/booking";
+import { Button } from "../components/common";
 
 type EnrolledClassResponse = {
   enrollmentId: number;

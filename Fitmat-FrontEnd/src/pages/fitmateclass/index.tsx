@@ -2,8 +2,8 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/router";
-import { Layout } from "../../../components/Layout";
-import { Button, Card } from "../../../components/common";
+import { Layout } from "../../components/Layout";
+import { Button, Card } from "../../components/common";
 
 type Class = {
   id: number;

@@ -1,10 +1,10 @@
 ﻿import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
-import ClassControl from "../../components/admin/ClassControl";
-import ClassCategory from "../../components/admin/ClassCategory";
-import ContactControl from "../../components/admin/ContactControl";
-import ReviewControl from "../../components/admin/ReviewControl";
-import TrainerControl from "../../components/admin/TrainerControl";
+import ClassControl from "../components/admin/ClassControl";
+import ClassCategory from "../components/admin/ClassCategory";
+import ContactControl from "../components/admin/ContactControl";
+import ReviewControl from "../components/admin/ReviewControl";
+import TrainerControl from "../components/admin/TrainerControl";
 
 type TokenPayload = {
   id?: number;

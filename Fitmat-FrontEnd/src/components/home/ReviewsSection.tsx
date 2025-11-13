@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { LoadingSpinner } from "@/components/common";  // <-- แก้ path
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+  // <-- แก้ path
 
 
 interface Review {

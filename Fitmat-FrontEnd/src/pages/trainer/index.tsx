@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { Layout } from "../../../components/Layout";
-import { TrainerCard, TrainerSearch } from "../../../components/trainer";
+import { Layout } from "../../components/Layout";
+import { TrainerCard, TrainerSearch } from "../../components/trainer";
 
 type Trainer = {
   id: number;

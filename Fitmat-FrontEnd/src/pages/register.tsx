@@ -1,6 +1,6 @@
 ﻿import { useState } from "react";
 import { useRouter } from "next/router";
-import AuthForm from "../../components/auth/AuthForm";
+import AuthForm from "../components/auth/AuthForm";
 import { register } from "../utils/auth";
 
 type RegisterResponse = {

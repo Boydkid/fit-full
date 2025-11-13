@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
-import { Layout } from "../../components/Layout";
-import { Button, Input, Card } from "../../components/common";
+import { Layout } from "../components/Layout";
+import { Button, Input, Card } from "../components/common";
 
 interface User {
   id: number;

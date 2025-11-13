@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Header from "../../components/Layout/Header";
-import Footer from "../../components/Layout/Footer";
+import Header from "../components/Layout/Header";
+import Footer from "../components/Layout/Footer";
 
 type ReviewSummary = {
   totalReviews: number;

@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import FadeIn from '../../../components/common/FadeIn';
+import FadeIn from '../../components/common/FadeIn';
 
 // Mock IntersectionObserver
 global.IntersectionObserver = jest.fn().mockImplementation((callback) => ({

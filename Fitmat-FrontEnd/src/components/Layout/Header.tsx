@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { getCurrentUser, logout as authLogout, User } from "../../src/utils/auth";
+import { getCurrentUser, logout as authLogout, User } from "../../utils/auth";
 
 const menuItems = [
   { name: "home", href: "/" },
