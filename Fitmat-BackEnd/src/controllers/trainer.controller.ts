@@ -168,3 +168,27 @@ export const listBookings = async (_req: Request, res: Response) => {
     return res.status(500).json({ message: "Failed to fetch bookings" });
   }
 };
+
+
+export const listMyTrainerBookings = async (req: Request, res: Response) => {
+  const userId = req.authUser?.id;
+
+  if (!userId) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  try {
+    const bookings = await prisma.trainerBooking.findMany({
+      where: { userId },
+      orderBy: { createdAt: "desc" },
+      include: {
+        trainer: { select: { id: true, email: true, username: true } },
+      },
+    });
+
+    return res.json(bookings);
+  } catch (error) {
+    console.error("Failed to fetch trainer bookings", error);
+    return res.status(500).json({ message: "Failed to fetch trainer bookings" });
+  }
+};
