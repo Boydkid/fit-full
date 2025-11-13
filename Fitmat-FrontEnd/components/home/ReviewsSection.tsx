@@ -32,7 +32,7 @@ export default function ReviewsSection() {
       try {
         setLoading(true);
         setError(null);
-        const response = await fetch('http://localhost:4000/api/reviews');
+        const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/reviews');
         if (!response.ok) {
           throw new Error('Failed to fetch reviews');
         }

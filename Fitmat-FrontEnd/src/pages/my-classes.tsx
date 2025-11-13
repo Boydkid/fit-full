@@ -42,7 +42,7 @@ export default function MyClassesPage() {
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | "UPCOMING" | "ONGOING" | "ENDED">("all");
 
-  const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000").replace(/\/$/, "");
+  const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "${process.env.NEXT_PUBLIC_API_URL}").replace(/\/$/, "");
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");

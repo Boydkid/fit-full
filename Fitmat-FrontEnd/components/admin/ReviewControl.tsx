@@ -41,7 +41,7 @@ type ReviewControlProps = {
 const RAW_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ??
   process.env.NEXT_PUBLIC_BACKEND_API_BASE_URL ??
-  "http://localhost:4000/api";
+  "${process.env.NEXT_PUBLIC_API_URL}/api";
 
 const API_BASE_URL = RAW_BASE_URL.endsWith("/")
   ? RAW_BASE_URL.slice(0, -1)

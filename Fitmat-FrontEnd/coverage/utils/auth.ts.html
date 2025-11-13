@@ -571,7 +571,7 @@ export function isAdmin(): boolean {
 const getApiBaseUrl = <span class="fstat-no" title="function not covered" >(): string =&gt; {</span>
   // ถ้าใช้ static export หรือไม่ได้อยู่ใน production Next.js
 <span class="cstat-no" title="statement not covered" >  <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof window !== 'undefined' &amp;&amp; process.env.NEXT_PUBLIC_USE_STATIC_EXPORT === 'true') {</span>
-    const baseUrl = <span class="cstat-no" title="statement not covered" >process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000/api';</span>
+    const baseUrl = <span class="cstat-no" title="statement not covered" >process.env.NEXT_PUBLIC_API_BASE_URL || '${process.env.NEXT_PUBLIC_API_URL}/api';</span>
 <span class="cstat-no" title="statement not covered" >    return baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;</span>
   }
   // ใช้ Next.js API routes ถ้าไม่ได้ใช้ static export
@@ -580,7 +580,7 @@ const getApiBaseUrl = <span class="fstat-no" title="function not covered" >(): s
 &nbsp;
 // Helper function สำหรับเรียก backend โดยตรง
 const callBackendDirectly = <span class="fstat-no" title="function not covered" >async (e</span>ndpoint: string, payload: any): Promise&lt;AuthResponse&gt; =&gt; {
-  const baseUrl = <span class="cstat-no" title="statement not covered" >process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000/api';</span>
+  const baseUrl = <span class="cstat-no" title="statement not covered" >process.env.NEXT_PUBLIC_API_BASE_URL || '${process.env.NEXT_PUBLIC_API_URL}/api';</span>
   const apiUrl = <span class="cstat-no" title="statement not covered" >baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;</span>
   
   const response = <span class="cstat-no" title="statement not covered" >await fetch(`${apiUrl}${endpoint}`, {</span>

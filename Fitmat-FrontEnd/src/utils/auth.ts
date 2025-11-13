@@ -96,7 +96,7 @@ export function isAdmin(): boolean {
 const getApiBaseUrl = (): string => {
   // ถ้าใช้ static export หรือไม่ได้อยู่ใน production Next.js
   if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_USE_STATIC_EXPORT === 'true') {
-    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000/api';
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '${process.env.NEXT_PUBLIC_API_URL}/api';
     return baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
   }
   // ใช้ Next.js API routes ถ้าไม่ได้ใช้ static export
@@ -105,7 +105,7 @@ const getApiBaseUrl = (): string => {
 
 // Helper function สำหรับเรียก backend โดยตรง
 const callBackendDirectly = async (endpoint: string, payload: any): Promise<AuthResponse> => {
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000/api';
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '${process.env.NEXT_PUBLIC_API_URL}/api';
   const apiUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
   
   const response = await fetch(`${apiUrl}${endpoint}`, {

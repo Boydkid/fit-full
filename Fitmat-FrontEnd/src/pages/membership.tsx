@@ -17,7 +17,7 @@ type TokenPayload = {
  * Membership Checkout Page (Stripe Checkout)
  * - Backend endpoint: POST /api/stripe/checkout
  *   body: { userId: number, priceId: string, successPath?: string, cancelPath?: string }
- * - .env.local: NEXT_PUBLIC_API_BASE=http://localhost:4000
+ * - .env.local: NEXT_PUBLIC_API_BASE=${process.env.NEXT_PUBLIC_API_URL}
  */
 
 // THB plans (display only; backend is the source of truth)
@@ -60,7 +60,7 @@ export default function MembershipPage() {
   const [token, setToken] = useState<string | null>(null);
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
 
-  const apiBase = useMemo(() => (process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000").replace(/\/$/, ""), []);
+  const apiBase = useMemo(() => (process.env.NEXT_PUBLIC_API_BASE || "${process.env.NEXT_PUBLIC_API_URL}").replace(/\/$/, ""), []);
 
   useEffect(() => {
     const storedToken = typeof window !== "undefined" ? localStorage.getItem("token") : null;

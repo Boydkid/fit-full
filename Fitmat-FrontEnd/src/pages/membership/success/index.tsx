@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
  *   }
  *
  * .env.local:
- *   NEXT_PUBLIC_API_BASE=http://localhost:4000
+ *   NEXT_PUBLIC_API_BASE=${process.env.NEXT_PUBLIC_API_URL}
  */
 
 export default function SuccessPage() {
@@ -26,7 +26,7 @@ export default function SuccessPage() {
     session_id?: string | string[];
   };
   const sessionId = Array.isArray(session_id) ? session_id[0] : session_id;
-  const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000").replace(/\/$/, "");
+  const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "${process.env.NEXT_PUBLIC_API_URL}").replace(/\/$/, "");
 
   const [state, setState] = useState<
     | { kind: "idle" }

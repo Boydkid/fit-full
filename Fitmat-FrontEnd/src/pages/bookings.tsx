@@ -116,7 +116,7 @@ export default function BookingsPage() {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch(`http://localhost:4000/api/users/${userId}/classes`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${userId}/classes`);
         if (!res.ok) {
           throw new Error("Unable to load bookings.");
         }
@@ -192,7 +192,7 @@ export default function BookingsPage() {
 
     try {
       const res = await fetch(
-        `http://localhost:4000/api/users/${userId}/classes/${enrollment.class.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/users/${userId}/classes/${enrollment.class.id}`,
         {
           method: "DELETE",
         }

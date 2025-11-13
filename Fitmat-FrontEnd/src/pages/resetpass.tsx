@@ -27,7 +27,7 @@ export default function ResetPasswordPage() {
 
     setLoading(true);
     try {
-      const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000").replace(/\/$/, "");
+      const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "${process.env.NEXT_PUBLIC_API_URL}").replace(/\/$/, "");
       const res = await fetch(`${apiBase}/api/verify-reset-token`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -67,7 +67,7 @@ export default function ResetPasswordPage() {
 
     setLoading(true);
     try {
-      const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000").replace(/\/$/, "");
+      const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "${process.env.NEXT_PUBLIC_API_URL}").replace(/\/$/, "");
       const res = await fetch(`${apiBase}/api/reset-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

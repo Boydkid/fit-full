@@ -1101,7 +1101,7 @@ export default function ClassDetailPage() {
   const { slug } = router.query; // ✅ ได้ค่าจาก URL /fitmateclass/[slug]
   const [user, setUser] = useState&lt;TokenPayload | null&gt;(null);
 &nbsp;
-  const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000").replace(/\/$/, "");
+  const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "${process.env.NEXT_PUBLIC_API_URL}").replace(/\/$/, "");
 &nbsp;
   useEffect(() =&gt; {
     const storedToken = localStorage.getItem("token");

@@ -33,7 +33,7 @@ export default function Trainer() {
       setLoading(true);
       setError(null);
       try {
-        const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000").replace(/\/$/, "");
+        const apiBase = (process.env.NEXT_PUBLIC_API_BASE || "${process.env.NEXT_PUBLIC_API_URL}").replace(/\/$/, "");
         const res = await fetch(`${apiBase}/api/trainers`);
         if (!res.ok) {
           throw new Error("Failed to fetch trainers");

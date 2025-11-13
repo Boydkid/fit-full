@@ -286,7 +286,7 @@
 const RAW_BASE_URL =
   process.env.BACKEND_API_BASE_URL ??
   process.env.NEXT_PUBLIC_API_BASE_URL ??
-  "http://localhost:4000/api";
+  "${process.env.NEXT_PUBLIC_API_URL}/api";
 &nbsp;
 const API_BASE_URL = RAW_BASE_URL.endsWith("/")
   ? <span class="branch-0 cbranch-no" title="branch not covered" >RAW_BASE_URL.slice(0, -1)</span>

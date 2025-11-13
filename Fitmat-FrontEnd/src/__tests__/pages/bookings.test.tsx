@@ -276,7 +276,7 @@ describe('BookingsPage', () => {
     await waitFor(() => {
       expect(Swal.fire).toHaveBeenCalled();
       expect(global.fetch).toHaveBeenCalledWith(
-        'http://localhost:4000/api/users/1/classes/1',
+        '${process.env.NEXT_PUBLIC_API_URL}/api/users/1/classes/1',
         expect.objectContaining({ method: 'DELETE' })
       );
     });

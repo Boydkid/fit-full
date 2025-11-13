@@ -53,7 +53,7 @@ export default function SettingsPage() {
         const payload = JSON.parse(atob(token.split('.')[1]));
         const userId = payload.id;
 
-        const response = await fetch(`http://localhost:4000/api/users/${userId}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${userId}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -172,7 +172,7 @@ export default function SettingsPage() {
         requestBody.profileImage = profileImage || null;
       }
 
-      const response = await fetch(`http://localhost:4000/api/users/${userId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -223,7 +223,7 @@ export default function SettingsPage() {
         return;
       }
 
-      const response = await fetch('http://localhost:4000/api/auth/change-password', {
+      const response = await fetch('${process.env.NEXT_PUBLIC_API_URL}/api/auth/change-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
