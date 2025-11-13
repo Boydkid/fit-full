@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { Card } from '../common';
-import { BookingModal } from '../booking';
+import React, { useState } from "react";
+import Link from "next/link";
+import { Card } from "../common";
+import BookingModal from "../booking/BookingModal";
 
 interface TrainerCardProps {
   trainer: {
@@ -32,34 +32,34 @@ export default function TrainerCard({
     }
   };
 
-  // Generate profile image based on trainer email (deterministic fallback)
-  const getFallbackImage = (_email: string) => "/user.svg";
+  const getFallbackImage = () => "/user.svg";
 
   const resolveImageSrc = (email: string, profileImage?: string | null) => {
     if (profileImage) {
-      if (
-        profileImage.startsWith('data:image') ||
-        profileImage.startsWith('http')
-      ) {
+      if (profileImage.startsWith("data:image") || profileImage.startsWith("http")) {
         return profileImage;
       }
-      if (profileImage.includes('base64,')) {
-        return profileImage.startsWith('data:')
+      if (profileImage.includes("base64,")) {
+        return profileImage.startsWith("data:")
           ? profileImage
           : `data:${profileImage}`;
       }
       return `data:image/jpeg;base64,${profileImage}`;
     }
-    return getFallbackImage(email);
+    return getFallbackImage();
   };
 
-  const StarRating = ({ rating, size = 'w-5 h-5' }: { rating: number | null; size?: string }) => (
-    <div className="flex gap-1 text-yellow-400 justify-center" aria-label={`${rating || 0} stars`}>
+  const StarRating = ({ rating }: { rating: number | null }) => (
+    <div className="flex gap-1 text-yellow-400 justify-center">
       {Array.from({ length: 5 }).map((_, i) => (
         <svg
           key={i}
           viewBox="0 0 20 20"
-          className={`${size} ${rating && i < Math.round(rating) ? "fill-current" : "fill-gray-300"}`}
+          className={`w-5 h-5 ${
+            rating && i < Math.round(rating)
+              ? "fill-current"
+              : "fill-gray-300"
+          }`}
         >
           <path d="M10 15.27L16.18 19l-1.64-7.03L20 7.24l-7.19-.61L10 0 7.19 6.63 0 7.24l5.46 4.73L3.82 19z" />
         </svg>
@@ -73,42 +73,33 @@ export default function TrainerCard({
         <div className="relative">
           <img
             src={resolveImageSrc(trainer.email, trainer.profileImage)}
-            alt={`เทรนเนอร์ ${trainer.email}`}
-            className="w-28 h-28 rounded-full object-cover mx-auto mb-4 border-4 border-red-100 group-hover:border-red-300 transition-colors"
-            onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src = getFallbackImage(trainer.email);
-            }}
+            alt={trainer.email}
+            className="w-28 h-28 rounded-full mx-auto mb-4 object-cover border-4 border-red-100"
+            onError={(e) => ((e.currentTarget as HTMLImageElement).src = getFallbackImage())}
           />
           <div className="absolute -top-2 -right-2 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
             {new Date(trainer.createdAt).getFullYear()}
           </div>
         </div>
 
-        <div className="mb-4">
-          <h3 className="font-bold text-lg text-gray-900 mb-1">{trainer.username || trainer.email }</h3>
-          <p className="text-gray-600 text-sm mb-2">{trainer.role}</p>
-          
-          <div className="flex justify-center mb-2">
-            <StarRating rating={trainer.averageRating} />
-          </div>
-          
-          <p className="text-xs text-gray-500">
-            {trainer.totalReviews} รีวิว
-          </p>
-        </div>
+        <h3 className="font-bold text-lg text-gray-900">{trainer.username || trainer.email}</h3>
+        <p className="text-sm text-gray-600 mb-2">{trainer.role}</p>
 
-        <div className="flex flex-col gap-2">
+        <StarRating rating={trainer.averageRating} />
+        <p className="text-xs text-gray-500 mt-1">{trainer.totalReviews} รีวิว</p>
+
+        <div className="flex flex-col gap-2 mt-4">
           <Link
             href={`/trainer/${trainer.id}`}
-            className="bg-blue-500 text-white py-2 px-4 rounded-lg text-sm font-semibold hover:bg-blue-600 transition-colors"
+            className="bg-blue-500 text-white py-2 rounded-lg text-sm hover:bg-blue-600"
           >
             ดูรายละเอียด
           </Link>
-          
-          {showBookingButton && onBook && (
+
+          {showBookingButton && (
             <button
               onClick={() => setShowBookingModal(true)}
-              className="bg-red-500 text-white py-2 px-4 rounded-lg text-sm font-semibold hover:bg-red-600 transition-colors"
+              className="bg-red-500 text-white py-2 rounded-lg text-sm hover:bg-red-600"
             >
               จองเลย
             </button>
@@ -122,6 +113,7 @@ export default function TrainerCard({
         trainer={{
           id: trainer.id,
           email: trainer.email,
+          username: trainer.username,
           role: trainer.role,
         }}
         onSubmit={handleBook}

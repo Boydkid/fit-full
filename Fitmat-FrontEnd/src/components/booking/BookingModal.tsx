@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Modal, Button, Input } from '../common';
+import Swal from "sweetalert2";   // ⭐ เพิ่มมาใหม่
 
+// =====================
+// Booking Data Interface
+// =====================
 interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -10,7 +14,7 @@ interface BookingModalProps {
     username?: string | null;
     role: string;
   };
-  onSubmit: (bookingData: BookingData) => void;
+  onSubmit?: (bookingData: BookingData) => void;   // ⭐ แก้ให้ optional
   loading?: boolean;
 }
 
@@ -21,6 +25,9 @@ interface BookingData {
   notes?: string;
 }
 
+// =====================
+// Component
+// =====================
 export default function BookingModal({
   isOpen,
   onClose,
@@ -28,6 +35,10 @@ export default function BookingModal({
   onSubmit,
   loading = false,
 }: BookingModalProps) {
+  
+  // ---------------------
+  // ฟอร์ม state
+  // ---------------------
   const [formData, setFormData] = useState<BookingData>({
     date: '',
     time: '',
@@ -35,11 +46,68 @@ export default function BookingModal({
     notes: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
+  // ---------------------
+  // ⭐ ฟังก์ชันจองคิวจริง ส่งไป Backend
+  // ---------------------
+  const handleBooking = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        Swal.fire("กรุณาเข้าสู่ระบบก่อน", "", "warning");
+        return;
+      }
+
+      const rawBase = process.env.NEXT_PUBLIC_API_URL || "https://fit-full-production.up.railway.app";
+      const apiBase = rawBase.replace(/\/$/, "");
+
+      const res = await fetch(`${apiBase}/api/trainers/book`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          trainerId: trainer.id,
+          date: formData.date,
+          time: formData.time,
+          duration: formData.duration,
+          note: formData.notes,
+        }),
+      });
+
+      const json = await res.json();
+
+      if (res.ok) {
+        Swal.fire("จองสำเร็จ!", "ระบบได้บันทึกคิวของคุณแล้ว", "success");
+        handleClose();
+      } else {
+        Swal.fire("ผิดพลาด", json.message || "จองไม่สำเร็จ", "error");
+      }
+
+    } catch (err) {
+      console.error(err);
+      Swal.fire("เกิดข้อผิดพลาด", "ไม่สามารถทำรายการได้", "error");
+    }
   };
 
+  // ---------------------
+  // Handle submit form
+  // ---------------------
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (onSubmit) {
+      // ถ้าหน้าแม่ส่ง onSubmit มา → ใช้ onSubmit
+      onSubmit(formData);
+    } else {
+      // ถ้าไม่มี onSubmit → เรียก handleBooking ภายใน modal
+      handleBooking();
+    }
+  };
+
+  // ---------------------
+  // ปิด Modal
+  // ---------------------
   const handleClose = () => {
     setFormData({
       date: '',
@@ -50,6 +118,9 @@ export default function BookingModal({
     onClose();
   };
 
+  // ---------------------
+  // UI
+  // ---------------------
   return (
     <Modal isOpen={isOpen} onClose={handleClose} title="จองคิวเทรนเนอร์" size="md">
       <div className="mb-6 p-4 bg-gradient-to-r from-red-50 to-red-100 rounded-lg">

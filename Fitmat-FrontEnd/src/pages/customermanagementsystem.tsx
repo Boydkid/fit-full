@@ -5,6 +5,8 @@ import ClassCategory from "../components/admin/ClassCategory";
 import ContactControl from "../components/admin/ContactControl";
 import ReviewControl from "../components/admin/ReviewControl";
 import TrainerControl from "../components/admin/TrainerControl";
+import BookingControl from "../components/admin/BookingControl";
+
 
 type TokenPayload = {
   id?: number;
@@ -147,6 +149,11 @@ export default function CustomerManagementSystem() {
             <div className="transform transition-all duration-300 hover:scale-[1.01]">
               <TrainerControl userId={adminId} token={token} />
             </div>
+
+            <div className="transform transition-all duration-300 hover:scale-[1.01]">
+              <BookingControl userId={adminId} token={token} />
+            </div>
+
 
             <div className="transform transition-all duration-300 hover:scale-[1.01]">
               <ReviewControl userId={adminId} token={token} />
