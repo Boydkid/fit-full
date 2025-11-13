@@ -20,7 +20,7 @@ npx prisma db push
 # รันเซิร์ฟเวอร์ (โหมดพัฒนา)
 npm run dev
 `
-ค่าเริ่มต้นของเซิร์ฟเวอร์คือ http://localhost:4000
+ค่าเริ่มต้นของเซิร์ฟเวอร์คือ ${process.env.NEXT_PUBLIC_API_URL}
 
 ### ตัวแปรสภาพแวดล้อม
 สร้างไฟล์ .env ที่โฟลเดอร์ Fitmat-BackEnd
@@ -155,7 +155,7 @@ ote ได้ (ไม่บังคับ) |
 
 **ตัวอย่างอัปโหลด (cURL)**
 `
-curl -X POST http://localhost:4000/api/payments \
+curl -X POST ${process.env.NEXT_PUBLIC_API_URL}/api/payments \
   -F "paymentImage=@/path/slip.jpg" \
   -F "userId=12" \
   -F "amount=1499" \

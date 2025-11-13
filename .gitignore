@@ -1,0 +1,8 @@
+node_modules
+.next
+out
+dist
+node_modules/
+*.lock
+.next/
+dist/

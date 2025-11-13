@@ -97,7 +97,7 @@ npx prisma db push
 npm run dev
 ```
 
-The backend API will be available at `http://localhost:4000`
+The backend API will be available at `${process.env.NEXT_PUBLIC_API_URL}`
 
 ### Frontend Setup
 
@@ -116,7 +116,7 @@ npm install
 3. Set up environment variables: Create a `.env.local` file in `Fitmat-FrontEnd/`:
 
 ```env
-NEXT_PUBLIC_API_BASE_URL=http://localhost:4000/api
+NEXT_PUBLIC_API_BASE_URL=${process.env.NEXT_PUBLIC_API_URL}/api
 ```
 
 4. Start the development server:

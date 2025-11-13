@@ -2,7 +2,7 @@
 
 ## Base URL
 ```
-http://localhost:4000
+${process.env.NEXT_PUBLIC_API_URL}
 
 
 ---
@@ -13,7 +13,7 @@ http://localhost:4000
 ตรวจสอบสถานะของ API Server
 
 ```
-GET http://localhost:4000/
+GET ${process.env.NEXT_PUBLIC_API_URL}/
 ```
 
 ---
@@ -24,7 +24,7 @@ GET http://localhost:4000/
 สมัครสมาชิก
 
 ```
-POST http://localhost:4000/api/register
+POST ${process.env.NEXT_PUBLIC_API_URL}/api/register
 ```
 
 **Body (JSON):**
@@ -53,7 +53,7 @@ POST http://localhost:4000/api/register
 เข้าสู่ระบบ
 
 ```
-POST http://localhost:4000/api/login
+POST ${process.env.NEXT_PUBLIC_API_URL}/api/login
 ```
 
 **Body (JSON):**
@@ -82,7 +82,7 @@ POST http://localhost:4000/api/login
 ออกจากระบบ
 
 ```
-POST http://localhost:4000/api/logout
+POST ${process.env.NEXT_PUBLIC_API_URL}/api/logout
 ```
 
 **Headers:**
@@ -96,7 +96,7 @@ Authorization: Bearer <token>
 ขอ Token ใหม่
 
 ```
-POST http://localhost:4000/api/reissue-token
+POST ${process.env.NEXT_PUBLIC_API_URL}/api/reissue-token
 ```
 
 **Headers:**
@@ -110,7 +110,7 @@ Authorization: Bearer <token>
 ขอ Reset Password
 
 ```
-POST http://localhost:4000/api/request-password-reset
+POST ${process.env.NEXT_PUBLIC_API_URL}/api/request-password-reset
 ```
 
 **Body (JSON):**
@@ -126,7 +126,7 @@ POST http://localhost:4000/api/request-password-reset
 ตรวจสอบ Reset Token
 
 ```
-POST http://localhost:4000/api/verify-reset-token
+POST ${process.env.NEXT_PUBLIC_API_URL}/api/verify-reset-token
 ```
 
 **Body (JSON):**
@@ -142,7 +142,7 @@ POST http://localhost:4000/api/verify-reset-token
 Reset Password
 
 ```
-POST http://localhost:4000/api/reset-password
+POST ${process.env.NEXT_PUBLIC_API_URL}/api/reset-password
 ```
 
 **Body (JSON):**
@@ -159,7 +159,7 @@ POST http://localhost:4000/api/reset-password
 เปลี่ยนรหัสผ่าน (ต้อง Authentication)
 
 ```
-POST http://localhost:4000/api/change-password
+POST ${process.env.NEXT_PUBLIC_API_URL}/api/change-password
 ```
 
 **Headers:**
@@ -183,7 +183,7 @@ Authorization: Bearer <token>
 ดึงรายการผู้ใช้ทั้งหมด (Admin only)
 
 ```
-GET http://localhost:4000/api/users?role=USER
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/users?role=USER
 ```
 
 **Headers:**
@@ -200,7 +200,7 @@ Authorization: Bearer <admin_token>
 ดึงรายการ Roles ทั้งหมด (Admin only)
 
 ```
-GET http://localhost:4000/api/users/roles
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/users/roles
 ```
 
 **Headers:**
@@ -214,7 +214,7 @@ Authorization: Bearer <admin_token>
 ดึงข้อมูลผู้ใช้ตาม ID
 
 ```
-GET http://localhost:4000/api/users/1
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/users/1
 ```
 
 ---
@@ -223,7 +223,7 @@ GET http://localhost:4000/api/users/1
 อัปเดตข้อมูลผู้ใช้
 
 ```
-PUT http://localhost:4000/api/users/1
+PUT ${process.env.NEXT_PUBLIC_API_URL}/api/users/1
 ```
 
 **Body (JSON):**
@@ -242,7 +242,7 @@ PUT http://localhost:4000/api/users/1
 อัปเดต Role ของผู้ใช้ (Admin only)
 
 ```
-PATCH http://localhost:4000/api/users/1/role
+PATCH ${process.env.NEXT_PUBLIC_API_URL}/api/users/1/role
 ```
 
 **Headers:**
@@ -263,7 +263,7 @@ Authorization: Bearer <admin_token>
 ดึงคลาสที่ผู้ใช้ลงทะเบียน
 
 ```
-GET http://localhost:4000/api/users/1/classes
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/users/1/classes
 ```
 
 ---
@@ -272,7 +272,7 @@ GET http://localhost:4000/api/users/1/classes
 ยกเลิกการลงทะเบียนคลาส
 
 ```
-DELETE http://localhost:4000/api/users/1/classes/5
+DELETE ${process.env.NEXT_PUBLIC_API_URL}/api/users/1/classes/5
 ```
 
 ---
@@ -283,7 +283,7 @@ DELETE http://localhost:4000/api/users/1/classes/5
 ดึงรายการเทรนเนอร์ทั้งหมด
 
 ```
-GET http://localhost:4000/api/trainers
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/trainers
 ```
 
 ---
@@ -292,7 +292,7 @@ GET http://localhost:4000/api/trainers
 ดึงข้อมูลเทรนเนอร์ตาม ID
 
 ```
-GET http://localhost:4000/api/trainers/1
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/trainers/1
 ```
 
 ---
@@ -303,7 +303,7 @@ GET http://localhost:4000/api/trainers/1
 ดึงรายการคลาสทั้งหมด
 
 ```
-GET http://localhost:4000/api/classes
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/classes
 ```
 
 ---
@@ -312,7 +312,7 @@ GET http://localhost:4000/api/classes
 ดึงรายการคลาสที่จะเกิดขึ้น (Upcoming)
 
 ```
-GET http://localhost:4000/api/classes/listclassupcoming
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/classes/listclassupcoming
 ```
 
 ---
@@ -321,7 +321,7 @@ GET http://localhost:4000/api/classes/listclassupcoming
 ดึงคลาสของตัวเอง (ต้อง Authentication - Trainer only)
 
 ```
-GET http://localhost:4000/api/classes/my-classes
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/classes/my-classes
 ```
 
 **Headers:**
@@ -335,7 +335,7 @@ Authorization: Bearer <trainer_token>
 ดึงคลาสของเทรนเนอร์
 
 ```
-GET http://localhost:4000/api/classes/trainer/1
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/classes/trainer/1
 ```
 
 ---
@@ -344,7 +344,7 @@ GET http://localhost:4000/api/classes/trainer/1
 ดึงข้อมูลคลาสตาม ID
 
 ```
-GET http://localhost:4000/api/classes/1
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/classes/1
 ```
 
 ---
@@ -353,7 +353,7 @@ GET http://localhost:4000/api/classes/1
 ดึงรายการผู้ลงทะเบียนในคลาส
 
 ```
-GET http://localhost:4000/api/classes/1/enrollments
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/classes/1/enrollments
 ```
 
 ---
@@ -362,7 +362,7 @@ GET http://localhost:4000/api/classes/1/enrollments
 สร้างคลาสใหม่ (Admin only)
 
 ```
-POST http://localhost:4000/api/classes
+POST ${process.env.NEXT_PUBLIC_API_URL}/api/classes
 ```
 
 **Headers:**
@@ -390,7 +390,7 @@ Authorization: Bearer <admin_token>
 อัปเดตข้อมูลคลาส (Admin only)
 
 ```
-PUT http://localhost:4000/api/classes/1
+PUT ${process.env.NEXT_PUBLIC_API_URL}/api/classes/1
 ```
 
 **Headers:**
@@ -418,7 +418,7 @@ Authorization: Bearer <admin_token>
 ลบคลาส (Admin only)
 
 ```
-DELETE http://localhost:4000/api/classes/1
+DELETE ${process.env.NEXT_PUBLIC_API_URL}/api/classes/1
 ```
 
 **Headers:**
@@ -432,7 +432,7 @@ Authorization: Bearer <admin_token>
 ลงทะเบียนคลาส (ต้อง Authentication)
 
 ```
-POST http://localhost:4000/api/classes/1/enroll
+POST ${process.env.NEXT_PUBLIC_API_URL}/api/classes/1/enroll
 ```
 
 **Headers:**
@@ -448,7 +448,7 @@ Authorization: Bearer <token>
 ดึงรายการหมวดหมู่คลาสทั้งหมด
 
 ```
-GET http://localhost:4000/api/class-categories
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/class-categories
 ```
 
 ---
@@ -457,7 +457,7 @@ GET http://localhost:4000/api/class-categories
 สร้างหมวดหมู่ใหม่ (Admin only)
 
 ```
-POST http://localhost:4000/api/class-categories
+POST ${process.env.NEXT_PUBLIC_API_URL}/api/class-categories
 ```
 
 **Headers:**
@@ -479,7 +479,7 @@ Authorization: Bearer <admin_token>
 อัปเดตหมวดหมู่ (Admin only)
 
 ```
-PUT http://localhost:4000/api/class-categories/1
+PUT ${process.env.NEXT_PUBLIC_API_URL}/api/class-categories/1
 ```
 
 **Headers:**
@@ -501,7 +501,7 @@ Authorization: Bearer <admin_token>
 ลบหมวดหมู่ (Admin only)
 
 ```
-DELETE http://localhost:4000/api/class-categories/1
+DELETE ${process.env.NEXT_PUBLIC_API_URL}/api/class-categories/1
 ```
 
 **Headers:**
@@ -519,7 +519,7 @@ Authorization: Bearer <admin_token>
 ดึงรายการรีวิวทั้งหมด
 
 ```
-GET http://localhost:4000/api/reviews
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/reviews
 ```
 
 ---
@@ -528,7 +528,7 @@ GET http://localhost:4000/api/reviews
 ดึงสรุปรีวิว
 
 ```
-GET http://localhost:4000/api/reviews/summary
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/reviews/summary
 ```
 
 ---
@@ -537,7 +537,7 @@ GET http://localhost:4000/api/reviews/summary
 ดึงรีวิวของเทรนเนอร์
 
 ```
-GET http://localhost:4000/api/reviews/trainer/1
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/reviews/trainer/1
 ```
 
 ---
@@ -546,7 +546,7 @@ GET http://localhost:4000/api/reviews/trainer/1
 สร้างรีวิวใหม่ (ต้อง Authentication)
 
 ```
-POST http://localhost:4000/api/reviews
+POST ${process.env.NEXT_PUBLIC_API_URL}/api/reviews
 ```
 
 **Headers:**
@@ -573,7 +573,7 @@ Authorization: Bearer <token>
 ลบรีวิว (Admin only)
 
 ```
-DELETE http://localhost:4000/api/reviews/1
+DELETE ${process.env.NEXT_PUBLIC_API_URL}/api/reviews/1
 ```
 
 **Headers:**
@@ -589,7 +589,7 @@ Authorization: Bearer <admin_token>
 ดึงรายการข้อความติดต่อทั้งหมด (Admin only)
 
 ```
-GET http://localhost:4000/api/contact
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/contact
 ```
 
 **Headers:**
@@ -603,7 +603,7 @@ Authorization: Bearer <admin_token>
 ส่งข้อความติดต่อ
 
 ```
-POST http://localhost:4000/api/contact
+POST ${process.env.NEXT_PUBLIC_API_URL}/api/contact
 ```
 
 **Body (JSON):**
@@ -625,7 +625,7 @@ POST http://localhost:4000/api/contact
 ดึงรายการหลักฐานการชำระเงิน (Admin only)
 
 ```
-GET http://localhost:4000/api/payments?userId=1
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/payments?userId=1
 ```
 
 **Headers:**
@@ -642,7 +642,7 @@ Authorization: Bearer <admin_token>
 ดึงรายการหลักฐานการชำระเงินทั้งหมด (Admin only)
 
 ```
-GET http://localhost:4000/api/payments/all
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/payments/all
 ```
 
 **Headers:**
@@ -656,7 +656,7 @@ Authorization: Bearer <admin_token>
 ดึงรูปภาพหลักฐานการชำระเงิน (Admin only)
 
 ```
-GET http://localhost:4000/api/payments/1/image
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/payments/1/image
 ```
 
 **Headers:**
@@ -670,7 +670,7 @@ Authorization: Bearer <admin_token>
 อัปโหลดหลักฐานการชำระเงิน (multipart/form-data)
 
 ```
-POST http://localhost:4000/api/payments
+POST ${process.env.NEXT_PUBLIC_API_URL}/api/payments
 ```
 
 **Content-Type:** `multipart/form-data`
@@ -695,7 +695,7 @@ POST http://localhost:4000/api/payments
 สร้าง Checkout Session
 
 ```
-POST http://localhost:4000/api/stripe/checkout
+POST ${process.env.NEXT_PUBLIC_API_URL}/api/stripe/checkout
 ```
 
 **Body (JSON):**
@@ -723,7 +723,7 @@ POST http://localhost:4000/api/stripe/checkout
 ตรวจสอบ Session
 
 ```
-GET http://localhost:4000/api/stripe/verify?session_id=cs_test_xxx
+GET ${process.env.NEXT_PUBLIC_API_URL}/api/stripe/verify?session_id=cs_test_xxx
 ```
 
 ---
@@ -732,7 +732,7 @@ GET http://localhost:4000/api/stripe/verify?session_id=cs_test_xxx
 Webhook สำหรับ Stripe (ไม่แนะนำให้ทดสอบใน Postman)
 
 ```
-POST http://localhost:4000/api/stripe/webhook
+POST ${process.env.NEXT_PUBLIC_API_URL}/api/stripe/webhook
 ```
 
 **Headers:**
@@ -780,7 +780,7 @@ USER < USER_BRONZE < USER_GOLD < USER_PLATINUM < TRAINER < ADMIN
 
 ### 1. สมัครสมาชิก
 1. Method: `POST`
-2. URL: `http://localhost:4000/api/register`
+2. URL: `${process.env.NEXT_PUBLIC_API_URL}/api/register`
 3. Headers: `Content-Type: application/json`
 4. Body (raw JSON):
    ```json
@@ -792,7 +792,7 @@ USER < USER_BRONZE < USER_GOLD < USER_PLATINUM < TRAINER < ADMIN
 
 ### 2. เข้าสู่ระบบ
 1. Method: `POST`
-2. URL: `http://localhost:4000/api/login`
+2. URL: `${process.env.NEXT_PUBLIC_API_URL}/api/login`
 3. Headers: `Content-Type: application/json`
 4. Body (raw JSON):
    ```json
@@ -805,13 +805,13 @@ USER < USER_BRONZE < USER_GOLD < USER_PLATINUM < TRAINER < ADMIN
 
 ### 3. ดึงรายการคลาส (ต้อง Authentication)
 1. Method: `GET`
-2. URL: `http://localhost:4000/api/classes/my-classes`
+2. URL: `${process.env.NEXT_PUBLIC_API_URL}/api/classes/my-classes`
 3. Headers:
    - `Authorization: Bearer <token ที่ได้จาก login>`
 
 ### 4. สร้างคลาสใหม่ (Admin)
 1. Method: `POST`
-2. URL: `http://localhost:4000/api/classes`
+2. URL: `${process.env.NEXT_PUBLIC_API_URL}/api/classes`
 3. Headers:
    - `Authorization: Bearer <admin_token>`
    - `Content-Type: application/json`
@@ -829,7 +829,7 @@ USER < USER_BRONZE < USER_GOLD < USER_PLATINUM < TRAINER < ADMIN
 
 ### 5. อัปโหลดหลักฐานการชำระเงิน
 1. Method: `POST`
-2. URL: `http://localhost:4000/api/payments`
+2. URL: `${process.env.NEXT_PUBLIC_API_URL}/api/payments`
 3. Body > form-data:
    - `paymentImage` (File): เลือกไฟล์รูปภาพ
    - `userId` (Text): `1`
