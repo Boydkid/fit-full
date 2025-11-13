@@ -1,0 +1,195 @@
+﻿รายงานผลการทดสอบ Fitmat BackEnd
+วันที่สร้างรายงาน: 2/11/2568 15:11:22
+
+สรุปผลการทดสอบ
+จำนวนชุดทดสอบทั้งหมด: 13
+ผ่าน: 13
+ล้มเหลว: 0
+จำนวนเทสต์ทั้งหมด: 181
+ผ่าน: 181
+ล้มเหลว: 0
+
+
+รายละเอียดผลการทดสอบ
+ไฟล์ทดสอบ,กลุ่มทดสอบ,รายการทดสอบ,สถานะ,เวลาที่ใช้ (ms)
+"middleware","Auth Middleware > attachAuthIfPresent","should attach user to request if valid token is present","ผ่าน",23
+"middleware","Auth Middleware > attachAuthIfPresent","should not attach user if no token is present","ผ่าน",1
+"middleware","Auth Middleware > attachAuthIfPresent","should not attach user if token is invalid","ผ่าน",1
+"middleware","Auth Middleware > attachAuthIfPresent","should not attach user if header does not start with Bearer","ผ่าน",1
+"middleware","Auth Middleware > attachAuthIfPresent","should handle Authorization header (case insensitive)","ผ่าน",2
+"middleware","Auth Middleware > requireAuth","should call next if valid token is present","ผ่าน",2
+"middleware","Auth Middleware > requireAuth","should return 401 if no token is present","ผ่าน",2
+"middleware","Auth Middleware > requireAuth","should return 401 if token is invalid","ผ่าน",1
+"middleware","Auth Middleware > requireAdmin","should call next if valid admin token is present","ผ่าน",2
+"middleware","Auth Middleware > requireAdmin","should return 403 if user is not admin","ผ่าน",3
+"middleware","Auth Middleware > requireAdmin","should return 401 if no token is present","ผ่าน",1
+"middleware","Auth Middleware > requireAdmin","should return 401 if token is invalid","ผ่าน",1
+"jwt","JWT Utilities > generateToken","should generate a valid JWT token","ผ่าน",2
+"jwt","JWT Utilities > generateToken","should generate different tokens for different payloads","ผ่าน",2
+"jwt","JWT Utilities > generateToken","should accept custom options","ผ่าน",12
+"jwt","JWT Utilities > verifyToken","should verify and decode a valid token","ผ่าน",2
+"jwt","JWT Utilities > verifyToken","should throw error for invalid token","ผ่าน",21
+"jwt","JWT Utilities > verifyToken","should throw error for expired token","ผ่าน",4
+"jwt","JWT Utilities > getJwtSecret","should return JWT_SECRET from environment or fallback","ผ่าน",2
+"jwt","JWT Utilities > getJwtSecret","should use fallback JWT_SECRET when env var is not set","ผ่าน",66
+"stripePlans","Stripe Plans Constants","should export STRIPE_PRICE_TO_PLAN","ผ่าน",1
+"stripePlans","Stripe Plans Constants","should have valid price IDs","ผ่าน",2
+"stripePlans","Stripe Plans Constants","should have valid plan configurations for each price","ผ่าน",3
+"stripePlans","Stripe Plans Constants","should have Bronze plan configuration","ผ่าน",0
+"stripePlans","Stripe Plans Constants","should have Gold plan configuration","ผ่าน",1
+"stripePlans","Stripe Plans Constants","should have Platinum plan configuration","ผ่าน",0
+"stripe","Stripe API > POST /api/stripe/checkout","should return 400 if userId is missing","ผ่าน",124
+"stripe","Stripe API > POST /api/stripe/checkout","should return 400 if priceId is missing","ผ่าน",22
+"stripe","Stripe API > POST /api/stripe/checkout","should return 400 if priceId is invalid","ผ่าน",10
+"stripe","Stripe API > POST /api/stripe/checkout","should return 404 if user not found","ผ่าน",22
+"stripe","Stripe API > POST /api/stripe/checkout","should return 409 if user already has equal or higher role","ผ่าน",60
+"stripe","Stripe API > POST /api/stripe/webhook","should return 400 if signature verification fails","ผ่าน",22
+"stripe","Stripe API > GET /api/stripe/verify","should return 400 if session_id is missing","ผ่าน",9
+"stripe.routes","Stripe Routes","should export router","ผ่าน",14
+"stripe.routes","Stripe Routes","should be an express router","ผ่าน",2
+"trainer","Trainer API > GET /api/trainers","should return list of trainers","ผ่าน",98
+"trainer","Trainer API > GET /api/trainers/:trainerId","should return 400 for invalid trainerId","ผ่าน",20
+"trainer","Trainer API > GET /api/trainers/:trainerId","should return 404 for non-existent trainer","ผ่าน",24
+"trainer","Trainer API > GET /api/trainers/:trainerId","should return 404 if user is not a trainer","ผ่าน",12
+"trainer","Trainer API > GET /api/trainers/:trainerId","should return trainer details successfully","ผ่าน",24
+"trainer","Trainer API > GET /api/trainers/:trainerId","should calculate average rating correctly","ผ่าน",0
+"classCategory","Class Category API > POST /api/categories","should return 401 if no token","ผ่าน",108
+"classCategory","Class Category API > POST /api/categories","should return 403 if user is not admin","ผ่าน",19
+"classCategory","Class Category API > POST /api/categories","should return 400 if name is missing","ผ่าน",16
+"classCategory","Class Category API > POST /api/categories","should create category successfully","ผ่าน",32
+"classCategory","Class Category API > POST /api/categories","should return 409 if category name already exists","ผ่าน",200
+"classCategory","Class Category API > GET /api/categories","should return list of categories","ผ่าน",18
+"classCategory","Class Category API > PUT /api/categories/:id","should return 401 if no token","ผ่าน",11
+"classCategory","Class Category API > PUT /api/categories/:id","should return 403 if user is not admin","ผ่าน",10
+"classCategory","Class Category API > PUT /api/categories/:id","should return 400 if category id is missing","ผ่าน",11
+"classCategory","Class Category API > PUT /api/categories/:id","should return 400 if category id is invalid","ผ่าน",12
+"classCategory","Class Category API > PUT /api/categories/:id","should return 404 if category not found","ผ่าน",15
+"classCategory","Class Category API > PUT /api/categories/:id","should return 400 if no fields to update","ผ่าน",11
+"classCategory","Class Category API > PUT /api/categories/:id","should update category successfully","ผ่าน",23
+"classCategory","Class Category API > PUT /api/categories/:id","should return 409 if updated name conflicts","ผ่าน",42
+"classCategory","Class Category API > DELETE /api/categories/:id","should return 401 if no token","ผ่าน",26
+"classCategory","Class Category API > DELETE /api/categories/:id","should return 403 if user is not admin","ผ่าน",22
+"classCategory","Class Category API > DELETE /api/categories/:id","should return 400 if category id is invalid","ผ่าน",20
+"classCategory","Class Category API > DELETE /api/categories/:id","should return 404 if category not found","ผ่าน",20
+"classCategory","Class Category API > DELETE /api/categories/:id","should delete category successfully","ผ่าน",32
+"review","Review API > POST /api/reviews","should return 401 if no token","ผ่าน",110
+"review","Review API > POST /api/reviews","should return 401 if invalid token","ผ่าน",11
+"review","Review API > POST /api/reviews","should return 400 if missing required fields","ผ่าน",10
+"review","Review API > POST /api/reviews","should return 400 if rating is out of range","ผ่าน",9
+"review","Review API > POST /api/reviews","should return 400 if rating is less than 1","ผ่าน",10
+"review","Review API > GET /api/reviews","should return list of reviews","ผ่าน",11
+"review","Review API > GET /api/reviews/summary","should return review summary","ผ่าน",21
+"review","Review API > GET /api/reviews/trainer/:trainerId","should return 400 for invalid trainerId","ผ่าน",7
+"review","Review API > GET /api/reviews/trainer/:trainerId","should return 404 if trainer not found","ผ่าน",15
+"review","Review API > GET /api/reviews/trainer/:trainerId","should return 404 if user is not a trainer","ผ่าน",10
+"review","Review API > GET /api/reviews/trainer/:trainerId","should return trainer reviews successfully","ผ่าน",13
+"review","Review API > DELETE /api/reviews/:reviewId","should return 401 if no token","ผ่าน",5
+"review","Review API > DELETE /api/reviews/:reviewId","should return 403 if user is not admin","ผ่าน",5
+"review","Review API > DELETE /api/reviews/:reviewId","should return 400 for invalid reviewId","ผ่าน",6
+"review","Review API > DELETE /api/reviews/:reviewId","should return 404 if review not found","ผ่าน",8
+"review","Review API > DELETE /api/reviews/:reviewId","should delete review successfully","ผ่าน",1
+"review","Review API > POST /api/reviews - additional tests","should return 404 if reviewer not found","ผ่าน",20
+"review","Review API > POST /api/reviews - additional tests","should return 404 if trainer not found","ผ่าน",14
+"review","Review API > POST /api/reviews - additional tests","should return 404 if user is not a trainer","ผ่าน",12
+"payment","Payment API > POST /api/payment","should return 400 if no file is uploaded","ผ่าน",93
+"payment","Payment API > POST /api/payment","should return 404 if user not found","ผ่าน",25
+"payment","Payment API > POST /api/payment","should return 400 if userId is not a number","ผ่าน",11
+"payment","Payment API > POST /api/payment","should return 400 if amount is not a number","ผ่าน",11
+"payment","Payment API > POST /api/payment","should create payment proof successfully","ผ่าน",23
+"payment","Payment API > POST /api/payment","should create payment proof without userId","ผ่าน",13
+"payment","Payment API > GET /api/payment","should return 401 if no token","ผ่าน",8
+"payment","Payment API > GET /api/payment","should return 403 if user is not admin","ผ่าน",8
+"payment","Payment API > GET /api/payment","should return 400 if adminId query parameter is required but missing","ผ่าน",26
+"payment","Payment API > GET /api/payment","should return list of payment proofs for admin","ผ่าน",15
+"payment","Payment API > GET /api/payment","should filter by userId if provided","ผ่าน",15
+"payment","Payment API > GET /api/payment","should return 400 if userId filter is not a number","ผ่าน",7
+"payment","Payment API > GET /api/payment/all","should return 401 if no token","ผ่าน",4
+"payment","Payment API > GET /api/payment/all","should return 403 if user is not admin","ผ่าน",3
+"payment","Payment API > GET /api/payment/all","should return all payment proofs for admin","ผ่าน",12
+"payment","Payment API > GET /api/payment/:paymentId/image","should return 401 if no token","ผ่าน",9
+"payment","Payment API > GET /api/payment/:paymentId/image","should return 403 if user is not admin","ผ่าน",6
+"payment","Payment API > GET /api/payment/:paymentId/image","should return 400 if paymentId is not a number","ผ่าน",10
+"payment","Payment API > GET /api/payment/:paymentId/image","should return 404 if payment proof not found","ผ่าน",9
+"payment","Payment API > GET /api/payment/:paymentId/image","should return payment proof image for admin","ผ่าน",8
+"class","Class API > POST /api/classes","should return 401 if no token","ผ่าน",148
+"class","Class API > POST /api/classes","should return 403 if user is not admin","ผ่าน",20
+"class","Class API > POST /api/classes","should return 400 if required fields are missing","ผ่าน",14
+"class","Class API > POST /api/classes","should return 400 if trainerId does not reference a trainer","ผ่าน",19
+"class","Class API > POST /api/classes","should return 400 if endTime is before or equal to startTime","ผ่าน",14
+"class","Class API > POST /api/classes","should return 400 if capacity is invalid","ผ่าน",17
+"class","Class API > POST /api/classes","should return 400 if requiredRole is invalid","ผ่าน",7
+"class","Class API > POST /api/classes","should create class successfully","ผ่าน",42
+"class","Class API > GET /api/classes","should return list of classes","ผ่าน",29
+"class","Class API > GET /api/classes/listclassupcoming","should return list of upcoming classes","ผ่าน",13
+"class","Class API > GET /api/classes/:classId","should return 400 if classId is invalid","ผ่าน",9
+"class","Class API > GET /api/classes/:classId","should return 404 if class not found","ผ่าน",14
+"class","Class API > GET /api/classes/:classId","should return class by id","ผ่าน",19
+"class","Class API > POST /api/classes/:classId/enroll","should return 401 if no token","ผ่าน",13
+"class","Class API > POST /api/classes/:classId/enroll","should return 400 if classId is missing","ผ่าน",10
+"class","Class API > POST /api/classes/:classId/enroll","should return 404 if class not found","ผ่าน",17
+"class","Class API > POST /api/classes/:classId/enroll","should return 400 if class has started","ผ่าน",29
+"class","Class API > POST /api/classes/:classId/enroll","should return 400 if class is full","ผ่าน",51
+"class","Class API > POST /api/classes/:classId/enroll","should return 403 if user role does not meet requiredRole","ผ่าน",25
+"class","Class API > POST /api/classes/:classId/enroll","should enroll user successfully","ผ่าน",40
+"class","Class API > POST /api/classes/:classId/enroll","should return 409 if user already enrolled","ผ่าน",157
+"class","Class API > GET /api/classes/:classId/enrollments","should return 400 if classId is missing","ผ่าน",5
+"class","Class API > GET /api/classes/:classId/enrollments","should return 404 if class not found","ผ่าน",8
+"class","Class API > GET /api/classes/:classId/enrollments","should return class enrollments","ผ่าน",14
+"class","Class API > GET /api/classes/trainer/:trainerId","should return 400 if trainerId is invalid","ผ่าน",4
+"class","Class API > GET /api/classes/trainer/:trainerId","should return 404 if trainer not found","ผ่าน",5
+"class","Class API > GET /api/classes/trainer/:trainerId","should return 403 if trainer tries to view another trainer's classes","ผ่าน",37
+"class","Class API > GET /api/classes/trainer/:trainerId","should return trainer classes","ผ่าน",13
+"class","Class API > GET /api/classes/my-classes","should return 401 if no token","ผ่าน",3
+"class","Class API > GET /api/classes/my-classes","should return 403 if user is not a trainer","ผ่าน",5
+"class","Class API > GET /api/classes/my-classes","should return trainer's own classes","ผ่าน",8
+"class","Class API > PUT /api/classes/:classId","should return 401 if no token","ผ่าน",20
+"class","Class API > PUT /api/classes/:classId","should return 403 if user is not admin","ผ่าน",25
+"class","Class API > PUT /api/classes/:classId","should return 404 if class not found","ผ่าน",21
+"class","Class API > PUT /api/classes/:classId","should update class successfully","ผ่าน",27
+"class","Class API > PUT /api/classes/:classId","should return 400 if capacity is invalid","ผ่าน",17
+"class","Class API > PUT /api/classes/:classId","should return 400 if endTime is before startTime","ผ่าน",25
+"class","Class API > DELETE /api/classes/:classId","should return 401 if no token","ผ่าน",12
+"class","Class API > DELETE /api/classes/:classId","should return 403 if user is not admin","ผ่าน",10
+"class","Class API > DELETE /api/classes/:classId","should return 404 if class not found","ผ่าน",12
+"class","Class API > DELETE /api/classes/:classId","should delete class successfully","ผ่าน",21
+"class","Class API > DELETE /api/classes/:classId","should delete class with enrollments","ผ่าน",33
+"user","User API > GET /api/users/roles","should return 403 if not admin","ผ่าน",41
+"user","User API > GET /api/users","should return 403 if not admin","ผ่าน",9
+"user","User API > GET /api/users","should return 401 if no token","ผ่าน",7
+"user","User API > GET /api/users/:id","should return 404 if user not found","ผ่าน",27
+"user","User API > GET /api/users/:id/classes","should return 400 for invalid id","ผ่าน",9
+"user","User API > DELETE /api/users/:id/classes/:classId","should return 400 for invalid ids","ผ่าน",9
+"user","User API > DELETE /api/users/:id/classes/:classId","should return 400 for invalid classId","ผ่าน",7
+"user","User API > POST /api/users/change-password","should return 401 if no token","ผ่าน",44
+"user","User API > POST /api/users/change-password","should return 400 if missing passwords","ผ่าน",8
+"user","User API > POST /api/users/change-password","should return 400 if new password too short","ผ่าน",9
+"auth","Auth API > POST /api/register","should register a new user successfully","ผ่าน",238
+"auth","Auth API > POST /api/register","should return 400 if email is missing","ผ่าน",4
+"auth","Auth API > POST /api/register","should return 400 if password is missing","ผ่าน",3
+"auth","Auth API > POST /api/register","should return 409 if email already exists","ผ่าน",72
+"auth","Auth API > POST /api/login","should login successfully with correct credentials","ผ่าน",125
+"auth","Auth API > POST /api/login","should return 401 with invalid email","ผ่าน",68
+"auth","Auth API > POST /api/login","should return 401 with invalid password","ผ่าน",125
+"auth","Auth API > POST /api/login","should return 400 if email is missing","ผ่าน",67
+"auth","Auth API > POST /api/login","should return 400 if password is missing","ผ่าน",70
+"auth","Auth API > POST /api/logout","should logout successfully","ผ่าน",5
+"auth","Auth API > POST /api/request-password-reset","should return 400 if email is missing","ผ่าน",68
+"auth","Auth API > POST /api/request-password-reset","should return 404 if user not found","ผ่าน",78
+"auth","Auth API > POST /api/request-password-reset","should return 500 if email service is not configured","ผ่าน",70
+"auth","Auth API > POST /api/verify-reset-token","should return 400 if resetToken is missing","ผ่าน",76
+"auth","Auth API > POST /api/verify-reset-token","should return 400 if token is invalid","ผ่าน",81
+"auth","Auth API > POST /api/verify-reset-token","should return 400 if token has expired","ผ่าน",79
+"auth","Auth API > POST /api/verify-reset-token","should verify valid token successfully","ผ่าน",65
+"auth","Auth API > POST /api/reset-password","should return 400 if resetToken or newPassword is missing","ผ่าน",3
+"auth","Auth API > POST /api/reset-password","should return 400 if token is invalid or expired","ผ่าน",4
+"auth","Auth API > POST /api/reset-password","should reset password successfully with valid token","ผ่าน",0
+"auth","Auth API > POST /api/reissue-token","should return 401 if no token","ผ่าน",68
+"auth","Auth API > POST /api/reissue-token","should return 500 if invalid token","ผ่าน",68
+"auth","Auth API > POST /api/reissue-token","should return 404 if user not found","ผ่าน",70
+"auth","Auth API > POST /api/reissue-token","should reissue token successfully","ผ่าน",128
+"contact","Contact API > POST /api/contact","should return 400 if required fields are missing","ผ่าน",95
+"contact","Contact API > POST /api/contact","should create contact request successfully","ผ่าน",6055
+"contact","Contact API > POST /api/contact","should handle missing email configuration gracefully","ผ่าน",5413
+"contact","Contact API > GET /api/contact","should return 401 if no token","ผ่าน",4
+"contact","Contact API > GET /api/contact","should return 403 if user is not admin","ผ่าน",5
+"contact","Contact API > GET /api/contact","should return list of contacts for admin","ผ่าน",6
